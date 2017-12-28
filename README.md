@@ -5,3 +5,6 @@ Creates a [WordPress Gutenberg](https://wordpress.org/gutenberg/) block for embe
 
 ## License
 Code is licensed under GPL v3.0.
+
+## Demo
+![Gutenberg CodePen Embed Demo](https://raw.githubusercontent.com/ataylorme/gutenberg-codepen-embed/master/gutenberg-codepen-embed.gif)
