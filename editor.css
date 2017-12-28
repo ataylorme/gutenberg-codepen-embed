@@ -1,0 +1,30 @@
+/**
+ * ----------------------------------------------------------------------------
+ * #.# Editor CSS
+ * ----------------------------------------------------------------------------
+ */
+
+ .blocks-codepen-embed-control {
+	margin-bottom: 10px;
+}
+ 
+.blocks-codepen-embed-control label {
+	
+}
+
+.blocks-codepen-embed-control input {
+	
+}
+
+div[data-type="codepen/codepen-embed"] textarea {
+	box-shadow: none;
+	font-family: Menlo,Consolas,monaco,monospace;
+	font-size: 14px;
+	color: #23282d;
+	border: 1px solid #e2e4e7;
+	border-radius: 4px;
+	padding: .8em 1.6em;
+	margin: 0;
+	overflow-x: auto;
+	width: 100%;
+}
