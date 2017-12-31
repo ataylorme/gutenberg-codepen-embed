@@ -657,6 +657,13 @@ var _wp$blocks = wp.blocks,
     InspectorControls = _wp$blocks.InspectorControls,
     BlockDescription = _wp$blocks.BlockDescription;
 
+// Get Pen ID from CodePen URL
+
+function getPenID(content) {
+	var matches_array = content.match(/http[s]?:\/\/codepen\.io\/[^\/]+\/[pen|details|full|pres]+\/([a-zA-Z]{6})/);
+	return Array.isArray(matches_array) ? matches_array[1] : null;
+}
+
 /**
  * Register Block.
  *
@@ -665,7 +672,6 @@ var _wp$blocks = wp.blocks,
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-
 registerBlockType('codepen/codepen-embed', {
 	title: __('CodePen Embed', 'codepen'),
 
@@ -716,27 +722,8 @@ registerBlockType('codepen/codepen-embed', {
 				wp.element.createElement(
 					'p',
 					null,
-					__('The code block embeds code snippets from CodePen. The text in the block will load as a fallback if there is an issue loading the CodePen embed.', 'codepen')
+					__('This block embeds Pens from CodePen. Simply enter any text that includes a CodePen URL in the block. If there is an issue loading the CodePen embed the text will be used as a fallback.', 'codepen')
 				)
-			),
-			wp.element.createElement(
-				'div',
-				{ className: 'blocks-base-control blocks-codepen-embed-control' },
-				wp.element.createElement(
-					'label',
-					{ htmlFor: 'blocks-codepen-embed-control-pen-id', className: 'blocks-base-control__label' },
-					__('Pen ID:', 'codepen')
-				),
-				wp.element.createElement('input', { // eslint-disable-line jsx-a11y/no-onchange
-					id: 'blocks-codepen-embed-control-pen-id',
-					type: 'text',
-					'class': 'blocks-text-control__input',
-					onChange: function onChange(_ref2) {
-						var value = _ref2.target.value;
-						return setAttributes({ penID: value });
-					},
-					value: penID
-				})
 			),
 			wp.element.createElement(
 				'div',
@@ -749,9 +736,9 @@ registerBlockType('codepen/codepen-embed', {
 				wp.element.createElement('input', { // eslint-disable-line jsx-a11y/no-onchange
 					id: 'blocks-codepen-embed-control-pen-height',
 					type: 'text',
-					'class': 'blocks-text-control__input',
-					onChange: function onChange(_ref3) {
-						var value = _ref3.target.value;
+					className: 'blocks-text-control__input',
+					onChange: function onChange(_ref2) {
+						var value = _ref2.target.value;
 						return setAttributes({ penHeight: value });
 					},
 					value: penHeight
@@ -768,9 +755,9 @@ registerBlockType('codepen/codepen-embed', {
 				wp.element.createElement('input', { // eslint-disable-line jsx-a11y/no-onchange
 					id: 'blocks-codepen-embed-control-pen-theme-id',
 					type: 'text',
-					'class': 'blocks-text-control__input',
-					onChange: function onChange(_ref4) {
-						var value = _ref4.target.value;
+					className: 'blocks-text-control__input',
+					onChange: function onChange(_ref3) {
+						var value = _ref3.target.value;
 						return setAttributes({ themeID: value });
 					},
 					value: themeID
@@ -781,19 +768,26 @@ registerBlockType('codepen/codepen-embed', {
 			className: className,
 			value: content,
 			onChange: function onChange(event) {
-				return setAttributes({ content: event.target.value });
+				return setAttributes({ content: event.target.value, penID: getPenID(event.target.value) });
 			},
-			placeholder: __('CodePen embed fallback text', 'codepen'),
-			'aria-label': __('CodePen embed fallback text', 'codepen')
+			placeholder: __('CodePen embed text', 'codepen'),
+			'aria-label': __('CodePen embed text', 'codepen')
 		})];
 	},
-	save: function save(_ref5) {
-		var attributes = _ref5.attributes;
+	save: function save(_ref4) {
+		var attributes = _ref4.attributes;
 		var penID = attributes.penID,
 		    themeID = attributes.themeID,
 		    penHeight = attributes.penHeight,
 		    content = attributes.content;
 
+		if (null === penID) {
+			return wp.element.createElement(
+				'p',
+				{ className: 'codepen' },
+				content
+			);
+		}
 		return wp.element.createElement(
 			'div',
 			null,
