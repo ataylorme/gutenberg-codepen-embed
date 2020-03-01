@@ -1,5 +1,9 @@
 # Gutenberg CodePen Embed
 
+## Archived
+
+Please use [the official CodePen block plugin](https://wordpress.org/plugins/codepen-embed-block/)
+
 ## Description
 Creates a [WordPress Gutenberg](https://wordpress.org/gutenberg/) block for embedding Pens from [CodePen](http://codepen.io/).
 
